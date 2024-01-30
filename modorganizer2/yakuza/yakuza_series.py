@@ -24,11 +24,11 @@ def yakuza_check_rmm(plugin: BasicGame, win):
             win,
             'Ryu Mod Manager Missing',
             'Ryu Mod Manager was not found in the game\'s directory. Mods will not work without it.\nOpen Ryu Mod Manager download page?',
-            QMessageBox.Yes | QMessageBox.Ignore,
-            QMessageBox.Yes
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.Ignore,
+            QMessageBox.StandardButton.Yes
         )
 
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             webbrowser.open('https://github.com/Fronkln/RyuModManager/releases/latest')
 
 
@@ -50,24 +50,24 @@ def yakuza_import_mods(plugin: BasicGame, win):
         win,
         'Import Mods',
         'Do you want to import your Ryu Mod Manager mods to Mod Organizer?\nDoing so will move all the mods and delete them from the original directory.',
-        QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
-        QMessageBox.Cancel
+        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No | QMessageBox.StandardButton.Cancel,
+        QMessageBox.StandardButton.Cancel
     )
 
-    if reply == QMessageBox.Cancel:
+    if reply == QMessageBox.StandardButton.Cancel:
         # Just stop, and show the same prompt next time
         return
 
     # If the reply is either Yes or No, then we don't want to show this prompt next time
     plugin._organizer.setPluginSetting(plugin.name(), 'import_mods_prompt', False)
 
-    if reply == QMessageBox.No:
+    if reply == QMessageBox.StandardButton.No:
         QMessageBox.information(
             win,
             'Import Mods',
             'Mods will NOT be imported. If you want to see this prompt again, you can change the option in the plugin settings.',
-            QMessageBox.Ok,
-            QMessageBox.Ok
+            QMessageBox.StandardButton.Ok,
+            QMessageBox.StandardButton.Ok
         )
 
         return
@@ -123,15 +123,15 @@ def yakuza_import_mods(plugin: BasicGame, win):
     # Manual refresh is needed for some reason
     # Maybe something about the refresh not being able to finish until after the script is done?
     # no matter how much time you sleep, it won't finish
-    if reply == QMessageBox.Yes:
+    if reply == QMessageBox.StandardButton.Yes:
         QMessageBox.information(
             win,
             'Success',
             f'{success_count} mod(s) have been imported.\n' +
             (f'{fail_count} mod(s) could not be imported.\n' if fail_count > 0 else '') +
             '\nPlease refresh the mod list manually (Right click -> "Refresh")',
-            QMessageBox.Ok,
-            QMessageBox.Ok
+            QMessageBox.StandardButton.Ok,
+            QMessageBox.StandardButton.Ok
         )
 
 
